@@ -1,11 +1,13 @@
-const nanoid = require('nanoid')
-const contactsOperations = require('./index')
+const { nanoid } = require('nanoid')
+const getAllContacts = require('./getAll.js')
+const updateContacts = require('./updateContacts.js')
 
-const addContact = async (name, email, phone) => {
-  const contacts = await contactsOperations.getAllContacts()
-  const newContact = { name, email, phone, id: nanoid() }
+const addContact = async (data) => {
+  const contacts = await getAllContacts()
+  const newContact = { id: nanoid(), ...data }
   contacts.push(newContact)
-  await contactsOperations.updateContacts(contacts)
+  await updateContacts(contacts)
+  return newContact
 }
 
 module.exports = addContact
