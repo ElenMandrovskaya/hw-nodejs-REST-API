@@ -1,15 +1,14 @@
-const contactsOperations = require('../../model/contacts')
+const getAllContacts = require('./getAll.js')
+const updateContacts = require('./updateContacts.js')
 
 const removeContact = async (contactId) => {
-  const contacts = await contactsOperations.getAllContacts()
+  const contacts = await getAllContacts()
   const index = contacts.findIndex((contact) => String(contact.id) === String(contactId))
   if (index === -1) {
     return null
   }
   contacts.splice(index, 1)
-  await contactsOperations.updateContacts(contacts)
-
-  console.table(await contactsOperations.getAllContacts())
+  await updateContacts(contacts)
   return 'Success remove'
 }
 
