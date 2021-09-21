@@ -79,6 +79,33 @@ router.delete('/:contactId', async (req, res, next) => {
   }
 })
 
+router.put('/:id', async(req, res, next) => {
+  try {
+    const { error } = contactSchema.validate(req.body)
+    if (error) {
+      const err = new Error(error.message)
+      err.status = 400
+      throw err
+    }
+    const { id } = req.params
+    const result = await contactsOperations.updateById(id, req.body)
+    if (!result) {
+      const error = new Error(`Contact with id=${id} not found`)
+      error.status = 404
+      throw error
+    }
+    res.json({
+      status: 'success',
+      code: 200,
+      data: {
+        result
+      }
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
 // router.patch('/:contactId', async (req, res, next) => {
 //   res.json({ message: 'template message' })
 // })
