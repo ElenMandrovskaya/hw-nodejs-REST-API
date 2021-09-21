@@ -1,9 +1,9 @@
 const getAllContacts = require('./getAll.js')
 const updateContacts = require('./updateContacts.js')
 
-const updateById = async(id, body) => {
+const updateById = async(contactId, body) => {
   const contacts = await getAllContacts()
-  const index = contacts.findIndex(contact => contact.id === Number(id))
+  const index = contacts.findIndex(contact => String(contact.id) === String(contactId))
   if (index === -1) {
     return null
   }
