@@ -1,4 +1,5 @@
 const getAllContacts = require('./getAll.js')
+// const contactOperations = require('../contacts')
 
 const getContactById = async (contactId) => {
   const contacts = await getAllContacts()

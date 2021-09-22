@@ -1,6 +1,7 @@
 const { nanoid } = require('nanoid')
 const getAllContacts = require('./getAll.js')
 const updateContacts = require('./updateContacts.js')
+// const contactOperations = require('./index')
 
 const addContact = async (data) => {
   const contacts = await getAllContacts()
