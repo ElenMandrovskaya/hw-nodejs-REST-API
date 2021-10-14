@@ -2,8 +2,9 @@ const { successResult } = require('../../utils')
 const { User } = require('../../models')
 
 const signUp = async(req, res) => {
-  const result = await User.find({}, '_id name email phone favorite')
-  successResult(res, { result })
+  const { email, password } = req.body
+  const user = await User.findOne({ email }, '_id email password')
+  successResult(res, { user })
 }
 
 module.exports = signUp
