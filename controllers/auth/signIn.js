@@ -1,6 +1,5 @@
 // const { successResult } = require('../../utils')
 const { NotFound, BadRequest } = require('http-errors')
-// const bcrypt = require('bcryptjs')
 const { User } = require('../../models')
 
 const signIn = async(req, res) => {
@@ -12,7 +11,9 @@ const signIn = async(req, res) => {
   if (!user.comparePassword(password)) {
     throw new BadRequest('Invalid password')
   }
-  const token = 'eqwewer.errggeger.gdfggdfg'
+
+  const token = user.createToken()
+  await User.findByIdAndUpdate(user._id, { token })
   res.json({
     status: 'success',
     code: 200,
