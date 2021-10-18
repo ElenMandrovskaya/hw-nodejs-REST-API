@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose')
 const Joi = require('joi')
+const bcrypt = require('bcryptjs')
 
 // const nameRegEx = /^[a-zA-Zа-яА-Я'][a-zA-Zа-яА-Я-' ]+[a-zA-Zа-яА-Я']?$/u
 // const passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/
@@ -31,6 +32,14 @@ const userSchema = Schema({
   //   default: null,
   // },
 }, { versionKey: false, timestamps: true })
+
+userSchema.methods.setPassword = function(password) {
+  this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+}
+
+userSchema.methods.comparePassword = function(password) {
+  return bcrypt.compareSync(password, this.password)
+}
 
 const joiSchema = Joi.object({
 //   name: Joi.string().regex(nameRegEx).required(),
