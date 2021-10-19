@@ -1,9 +1,13 @@
-const { successResult } = require('../../utils')
+// const { successResult } = require('../../utils')
 const { User } = require('../../models')
 
 const signOut = async(req, res) => {
-  const result = await User.find({}, '_id name email phone favorite')
-  successResult(res, { result })
+  const { _id } = req.user
+  await User.findByIdAndUpdate(_id, { token: null })
+  res.json({
+    status: 'success',
+    code: 200,
+    message: 'Success signout'
+  })
 }
-
 module.exports = signOut
