@@ -1,4 +1,3 @@
-// const { successResult } = require('../../utils')
 const { Conflict } = require('http-errors')
 const { User } = require('../../models')
 

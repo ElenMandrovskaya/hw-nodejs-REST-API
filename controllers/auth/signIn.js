@@ -1,19 +1,11 @@
-// const { successResult } = require('../../utils')
-// const { NotFound, BadRequest } = require('http-errors')
 const { Unauthorized } = require('http-errors')
 const { User } = require('../../models')
 
 const signIn = async(req, res) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
-  // if (!user) {
-  //   throw new NotFound(`User with such Email ${email} was not found`)
-  // }
-  // if (!user.comparePassword(password)) {
-  //   throw new BadRequest('Invalid password')
-  // }
   if (!user || !user.comparePassword(password)) {
-    throw new Unauthorized('Email or password was wrong')
+    throw new Unauthorized('Email or password is wrong')
   }
 
   const token = user.createToken()
