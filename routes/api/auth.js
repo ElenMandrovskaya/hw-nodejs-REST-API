@@ -1,7 +1,7 @@
 const express = require('express')
 const { controllerWrapper, validation, authenticate, uploadFiles } = require('../../middlewares')
 const { joiSchema } = require('../../models/user')
-const { signUp, signIn, signOut, getCurrent, avatar } = require('../../controllers/auth')
+const { signUp, signIn, signOut, getCurrent, avatars } = require('../../controllers/auth')
 
 const router = express.Router()
 
@@ -13,6 +13,6 @@ router.get('/signout', authenticate, controllerWrapper(signOut))
 
 router.get('/current', authenticate, controllerWrapper(getCurrent))
 
-router.patch('/avatar', authenticate, uploadFiles.single('avatar'), controllerWrapper(avatar))
+router.patch('/avatar', authenticate, uploadFiles.single('avatar'), controllerWrapper(avatars))
 
 module.exports = router

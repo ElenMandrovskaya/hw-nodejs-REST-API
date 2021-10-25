@@ -22,6 +22,9 @@ const userSchema = Schema({
     type: String,
     default: null,
   },
+  avatarUrl: {
+    type: String,
+  },
 }, { versionKey: false, timestamps: true })
 
 userSchema.methods.setPassword = function(password) {
@@ -30,6 +33,10 @@ userSchema.methods.setPassword = function(password) {
 
 userSchema.methods.comparePassword = function(password) {
   return bcrypt.compareSync(password, this.password)
+}
+
+userSchema.methods.setAvatar = function(avatar) {
+  this.avatarUrl = avatar
 }
 
 const { SECRET_KEY } = process.env
