@@ -24,4 +24,20 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message })
 })
 
+const sgMail = require('@sendgrid/mail')
+const { SENDGRID_KEY } = process.env
+
+// console.log(SENDGRID_KEY)
+sgMail.setApiKey(SENDGRID_KEY)
+
+const email = {
+  to: 'dzyubahelen@gmail.com',
+  from: 'e.mandrovska@gmail.com',
+  subject: 'Verification email',
+  html: '<div>TEST</div>'
+}
+
+sgMail.send(email)
+  .then(() => console.log('Email was sent successfully'))
+  .catch(error => console.log(error.message))
 module.exports = app
