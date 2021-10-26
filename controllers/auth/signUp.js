@@ -2,6 +2,7 @@ const { Conflict } = require('http-errors')
 const gravatar = require('gravatar')
 const { nanoid } = require('nanoid')
 const { User } = require('../../models')
+const { sendEmail } = require('../../utils')
 
 const signUp = async(req, res) => {
   const { email, password } = req.body
@@ -17,6 +18,13 @@ const signUp = async(req, res) => {
   newUser.setPassword(password)
   newUser.setAvatar(gravatar.url(email))
   await newUser.save()
+
+  const mail = {
+    to: email,
+    subject: 'Email erification',
+    html: `<a href='http://localhost:3000/api/auth/verify/${verifyToken}' target='_blank'>Please confirm your email</a>`
+  }
+  await sendEmail(mail)
   res.status(201).json({
     status: 'Success',
     code: 201,
