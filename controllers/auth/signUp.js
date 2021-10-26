@@ -1,5 +1,6 @@
 const { Conflict } = require('http-errors')
 const gravatar = require('gravatar')
+const { nanoid } = require('nanoid')
 const { User } = require('../../models')
 
 const signUp = async(req, res) => {
@@ -8,7 +9,11 @@ const signUp = async(req, res) => {
   if (user) {
     throw new Conflict('User already exists')
   }
-  const newUser = new User({ email })
+  const verifyToken = nanoid()
+  const newUser = new User({
+    email,
+    verifyToken
+  })
   newUser.setPassword(password)
   newUser.setAvatar(gravatar.url(email))
   await newUser.save()
